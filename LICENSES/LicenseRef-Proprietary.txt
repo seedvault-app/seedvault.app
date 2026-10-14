@@ -1,0 +1,8 @@
+These files are third-party documents and are NOT covered by the license that
+applies to the rest of this repository.
+
+2021-security-quickscan-ros.pdf and 2024-security-quickscan-ros.pdf are
+security-audit reports copyright Radically Open Security B.V.
+
+They are included here for reference only. All rights are reserved by their
+copyright holder(s); see each document for its own terms.

@@ -1,9 +1,266 @@
-<html>
+<!DOCTYPE html>
+<!--
+SPDX-FileCopyrightText: The Calyx Institute
+SPDX-License-Identifier: CC-BY-SA-4.0
+-->
+<html lang="en">
 <head>
-<title>Seedvault Backup</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seedvault</title>
+
+  <style>
+    @font-face {
+      font-family: 'Google Sans Flex';
+      font-style: normal;
+      font-weight: 400 700;
+      font-stretch: 100%;
+      font-display: swap;
+      src: url("fonts/google-sans-flex-latin.woff2") format("woff2");
+    }
+
+    *, *::before, *::after {
+      font-family: 'Google Sans Flex', 'Google Sans', sans-serif !important;
+    }
+
+    :root {
+      --md-sys-color-primary: #0ead69;
+      --md-sys-color-on-primary: #ffffff;
+      --md-sys-color-outline: #0ead69;
+      --md-sys-color-primary-container: #d2f8e5;
+      --md-sys-color-on-primary-container: #023820;
+
+      --md-sys-color-background: #fdfbfc;
+      --md-sys-color-on-background: #2d1e2f;
+      --md-sys-color-surface: #f8f4f9;
+      --md-sys-color-surface-variant: #e8dee9;
+      --md-sys-color-on-surface: #2d1e2f;
+      --md-sys-color-on-surface-variant: #534355;
+
+      background-color: var(--md-sys-color-background);
+      color: var(--md-sys-color-on-background);
+      margin: 0;
+      padding: 0;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --md-sys-color-primary: #0ead69;
+        --md-sys-color-on-primary: #ffffff;
+        --md-sys-color-outline: #0ead69;
+        --md-sys-color-primary-container: #0b5c38;
+        --md-sys-color-on-primary-container: #d2f8e5;
+
+        --md-sys-color-background: #170f18;
+        --md-sys-color-on-background: #f3ebf4;
+        --md-sys-color-surface: #2d1e2f;
+        --md-sys-color-surface-variant: #433245;
+        --md-sys-color-on-surface: #f3ebf4;
+        --md-sys-color-on-surface-variant: #d3c3d5;
+      }
+    }
+
+    .brand-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 16px;
+      background-color: var(--md-sys-color-surface-variant);
+      display: block;
+      box-shadow: 0 4px 12px rgba(45, 30, 47, 0.12);
+    }
+
+    .container {
+      max-width: 520px;
+      margin: 36px auto;
+      padding: 0 16px;
+    }
+
+    header {
+      margin-bottom: 32px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin: 0 0 6px 0;
+      letter-spacing: -0.02em;
+      color: var(--md-sys-color-on-background);
+    }
+
+    header p {
+      margin: 0 0 22px 0;
+      font-size: 0.95rem;
+      line-height: 1.45;
+      color: var(--md-sys-color-on-surface-variant);
+    }
+
+    .header-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      width: 100%;
+      min-height: 44px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      height: 40px;
+      padding: 0 24px 0 16px;
+      border-radius: 9999px;
+      border: 1px solid transparent;
+      font-size: 0.875rem;
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: 0.01em;
+      text-decoration: none;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: background-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--md-sys-color-primary);
+      outline-offset: 2px;
+    }
+
+    .btn-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      display: block;
+    }
+
+    .btn-filled {
+      background-color: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-primary);
+      box-shadow: 0 1px 2px rgba(45, 30, 47, 0.12);
+    }
+
+    .btn-filled:hover {
+      box-shadow: 0 3px 10px rgba(45, 30, 47, 0.2);
+    }
+
+    .btn-outlined {
+      color: var(--md-sys-color-primary);
+      border-color: var(--md-sys-color-outline);
+    }
+
+    .btn-outlined:hover {
+      background-color: rgba(14, 173, 105, 0.12);
+    }
+
+    .nav-btn {
+      height: 44px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      background-color: #2d1e2f;
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(45, 30, 47, 0.22);
+    }
+
+    .nav-btn:hover {
+      box-shadow: 0 6px 18px rgba(45, 30, 47, 0.28);
+    }
+
+    .m3-card {
+      background-color: var(--md-sys-color-surface);
+      border-radius: 16px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+
+    .m3-card h2 {
+      margin: 0 0 6px 0;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--md-sys-color-on-surface);
+      letter-spacing: -0.01em;
+    }
+
+    .m3-card p {
+      margin: 0 0 16px 0;
+      font-size: 0.88rem;
+      line-height: 1.48;
+      color: var(--md-sys-color-on-surface-variant);
+    }
+
+    .card-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      min-height: 40px;
+    }
+  </style>
 </head>
 <body>
-	<img width="50" src="images/logo.svg"/>
-	Seedvault Android Backup
+
+  <div class="container">
+    <header>
+      <img src="icons/logo.png" alt="Seedvault Avatar" class="brand-icon" width="72" height="72">
+      <h1>Seedvault</h1>
+      <p>A backup application for the Android Open Source Project.</p>
+
+      <div class="header-buttons">
+        <a class="btn nav-btn" href="https://github.com/seedvault-app/seedvault/wiki/FAQ">
+          <img class="btn-icon" src="icons/help.svg" width="18" height="18" alt="">
+          FAQ
+        </a>
+
+        <a class="btn nav-btn" href="https://github.com/seedvault-app/seedvault/wiki/Known-Issues">
+          <img class="btn-icon" src="icons/warning.svg" width="18" height="18" alt="">
+          Known Issues
+        </a>
+      </div>
+    </header>
+
+    <main>
+      <div class="m3-card">
+        <h2>2021 Quick Security Evaluation</h2>
+        <p>Conducting a two-stage evaluation split across January and July-August 2021, Radically Open Security assessed Seedvault under the NLnet NGI Zero PET initiative to advise ongoing development.</p>
+
+        <div class="card-actions">
+          <a class="btn btn-filled" href="2021-security-quickscan-ros.pdf" target="_blank" rel="noopener">
+            <img class="btn-icon" src="icons/picture_as_pdf.svg" width="18" height="18" alt="">
+            View 2021 audit PDF
+          </a>
+
+          <a class="btn btn-outlined" href="https://nlnet.nl/project/Seedvault/" target="_blank" rel="noopener">
+            <img class="btn-icon" src="icons/open_in_new.svg" width="18" height="18" alt="">
+            NLnet project page
+          </a>
+        </div>
+      </div>
+
+      <div class="m3-card">
+        <h2>2024–2025 Comprehensive Code Audit</h2>
+        <p>Executed between December 9, 2024, and January 7, 2025, Radically Open Security performed an in-depth code audit for Seedvault under NLnet NGI Zero Entrust as part of the Seedvault Integrity grant project.</p>
+
+        <div class="card-actions">
+          <a class="btn btn-filled" href="2024-security-quickscan-ros.pdf" target="_blank" rel="noopener">
+            <img class="btn-icon" src="icons/picture_as_pdf.svg" width="18" height="18" alt="">
+            View 2024–2025 audit PDF
+          </a>
+
+          <a class="btn btn-outlined" href="https://nlnet.nl/project/SeedVault-Integrity/" target="_blank" rel="noopener">
+            <img class="btn-icon" src="icons/open_in_new.svg" width="18" height="18" alt="">
+            NLnet project page
+          </a>
+        </div>
+      </div>
+    </main>
+  </div>
+
 </body>
 </html>
