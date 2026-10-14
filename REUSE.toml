@@ -1,7 +1,7 @@
 version = 1
 
 [[annotations]]
-path = "icons/logo.png"
+path = ["icons/logo.png", "apple-touch-icon.png", "favicon.ico"]
 SPDX-FileCopyrightText = "The Calyx Institute"
 SPDX-License-Identifier = "Apache-2.0"
 
